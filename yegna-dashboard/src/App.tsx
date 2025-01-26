@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
+// import { useEffect, useState } from "react";
 
 const router = createBrowserRouter([
   {

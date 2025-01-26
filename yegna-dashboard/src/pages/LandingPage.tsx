@@ -9,13 +9,12 @@ function LandingPage() {
   return (
     <>
       <NavBar />
-      <div className="pt-16">
-        <Home />
-        <Service />
-        <Testimonies />
-        <AboutUs />
-        <SignIn />
-      </div>
+
+      <Home />
+      <Service />
+      <Testimonies />
+      <AboutUs />
+      <SignIn />
     </>
   );
 }

@@ -6,24 +6,24 @@ export const theme = {
   extend: {
     colors: {
       primary: {
-        light: "#4f46e5", // Example light mode primary color
-        dark: "#1d4ed8", // Example dark mode primary color
+        light: "#10B981",
+        dark: "#1d4ed8",
       },
       secondary: {
-        light: "#fbbf24", // Example light mode secondary color
-        dark: "#f59e0b", // Example dark mode secondary color
+        light: "#fbbf24",
+        dark: "#f59e0b",
       },
       background: {
-        light: "#ffffff", // Light mode background
-        dark: "#0E0817", // Dark mode background
+        light: "#ffffff",
+        dark: "#0E0817",
       },
       text: {
-        light: "#111827", // Light mode text
-        dark: "#f9fafb", // Dark mode text
+        light: "#111827",
+        dark: "#f9fafb",
       },
     },
     fontFamily: {
-      sans: ["Roboto", ..._fontFamily.sans], // Set Roboto as the default sans font
+      sans: ["Roboto", ..._fontFamily.sans],
     },
   },
 };
