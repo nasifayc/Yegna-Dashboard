@@ -1,0 +1,127 @@
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaLinkedinIn,
+  FaInstagram,
+} from "react-icons/fa";
+
+import logo from "../../assets/logo.png";
+
+const Footer: React.FC = () => {
+  return (
+    <footer className="relative bg-background-dark text-gray-300 py-16 px-8 md:px-20">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Company Info */}
+        <div>
+          <img className="mb-3" src={logo} alt="Logo" />
+
+          <p className="text-sm leading-6">
+            We provide exceptional services and innovative solutions for all
+            your needs. Our mission is to ensure customer satisfaction and
+            excellence in every project.
+          </p>
+        </div>
+
+        {/* Quick Links */}
+        <div>
+          <h2 className="text-2xl font-bold text-primary-light mb-4">
+            Quick Links
+          </h2>
+          <ul className="space-y-2">
+            <li>
+              <a
+                href="#about-us"
+                className="hover:text-primary-light transition"
+              >
+                About Us
+              </a>
+            </li>
+            <li>
+              <a
+                href="#services"
+                className="hover:text-primary-light transition"
+              >
+                Services
+              </a>
+            </li>
+            <li>
+              <a
+                href="#testimonies"
+                className="hover:text-primary-light transition"
+              >
+                Testimonials
+              </a>
+            </li>
+            <li>
+              <a
+                href="#contact"
+                className="hover:text-primary-light transition"
+              >
+                Contact Us
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        {/* Newsletter Subscription */}
+        <div>
+          <h2 className="text-2xl font-bold text-primary-light mb-4">
+            Subscribe
+          </h2>
+          <p className="text-sm leading-6 mb-4">
+            Stay updated with the latest news and special offers.
+          </p>
+          <form className="flex flex-col space-y-3">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="p-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button className="mt-8 px-6 py-3 border-white border-2  text-white hover:text-primary-light rounded-full hover:border-primary-light transition duration-300">
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {/* Footer Bottom */}
+      <div className="mt-12 border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
+        <p className="text-sm">
+          © {new Date().getFullYear()} Our Company. All rights reserved.
+        </p>
+        <div className="flex space-x-4 mt-4 md:mt-0">
+          <a
+            href="#"
+            className="text-gray-400 hover:text-primary-light transition"
+            aria-label="Facebook"
+          >
+            <FaFacebookF />
+          </a>
+          <a
+            href="#"
+            className="text-gray-400 hover:text-primary-light transition"
+            aria-label="Twitter"
+          >
+            <FaTwitter />
+          </a>
+          <a
+            href="#"
+            className="text-gray-400 hover:text-primary-light transition"
+            aria-label="LinkedIn"
+          >
+            <FaLinkedinIn />
+          </a>
+          <a
+            href="#"
+            className="text-gray-400 hover:text-primary-light transition"
+            aria-label="Instagram"
+          >
+            <FaInstagram />
+          </a>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

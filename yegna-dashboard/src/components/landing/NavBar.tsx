@@ -1,4 +1,3 @@
-import React from "react";
 import logo from "../../assets/logo.png";
 
 const NavBar: React.FC = () => {
@@ -7,29 +6,39 @@ const NavBar: React.FC = () => {
       <img src={logo} alt="Logo" />
       <ul className="flex space-x-12">
         <li>
-          <a href="#home" className="text-text-dark hover:text-gray-300">
+          <a href="#home" className="text-text-dark hover:text-primary-light">
             Home
           </a>
         </li>
         <li>
-          <a href="#service" className="text-text-dark hover:text-gray-300">
+          <a
+            href="#service"
+            className="text-text-dark hover:text-primary-light"
+          >
             Service
           </a>
         </li>
+
         <li>
-          <a href="#testimonies" className="text-text-dark hover:text-gray-300">
-            Testimonies
-          </a>
-        </li>
-        <li>
-          <a href="#about-us" className="text-text-dark hover:text-gray-300">
+          <a
+            href="#about-us"
+            className="text-text-dark hover:text-primary-light"
+          >
             About Us
           </a>
         </li>
         <li>
-          <a href="#sign-in" className="text-text-dark hover:text-gray-300">
-            Sign In
+          <a
+            href="#testimonies"
+            className="text-text-dark hover:text-primary-light"
+          >
+            Testimonies
           </a>
+        </li>
+        <li>
+          <button className=" px-4 py-1 border-white border-2 hover:border-primary-light rounded-full   text-text-dark hover:text-primary-light transition duration-300">
+            Sign In
+          </button>
         </li>
       </ul>
     </nav>

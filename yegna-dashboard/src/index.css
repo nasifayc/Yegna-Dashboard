@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Optional: Add custom global styles */
 body {
-  @apply font-sans; /* Use Roboto globally */
+  @apply font-sans;
 }

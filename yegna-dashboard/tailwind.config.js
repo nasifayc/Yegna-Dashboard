@@ -6,7 +6,7 @@ export const theme = {
   extend: {
     colors: {
       primary: {
-        light: "#10B981",
+        light: "#49a850",
         dark: "#1d4ed8",
       },
       secondary: {
@@ -14,7 +14,7 @@ export const theme = {
         dark: "#f59e0b",
       },
       background: {
-        light: "#ffffff",
+        light: "#FAFAFA",
         dark: "#0E0817",
       },
       text: {
@@ -27,4 +27,7 @@ export const theme = {
     },
   },
 };
-export const plugins = [require("@tailwindcss/typography")];
+export const plugins = [
+  require("@tailwindcss/typography"),
+  require("tailwind-scrollbar-hide"),
+];

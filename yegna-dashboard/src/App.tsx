@@ -1,12 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
+import PageNotFound from "./pages/PageNotFound";
 // import { useEffect, useState } from "react";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LandingPage />,
-    errorElement: <h1>404 Page Not found</h1>,
+    errorElement: <PageNotFound />,
   },
 ]);
 function App() {

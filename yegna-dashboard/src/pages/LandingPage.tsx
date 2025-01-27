@@ -3,20 +3,19 @@ import NavBar from "../components/landing/NavBar";
 import Service from "../components/landing/Service";
 import Testimonies from "../components/landing/Testimonies";
 import AboutUs from "../components/landing/AboutUs";
-import SignIn from "../components/landing/SignIn";
+import Footer from "../components/landing/Footer";
 
-function LandingPage() {
+const LandingPage: React.FC = () => {
   return (
     <>
       <NavBar />
-
       <Home />
       <Service />
-      <Testimonies />
       <AboutUs />
-      <SignIn />
+      <Testimonies />
+      <Footer />
     </>
   );
-}
+};
 
 export default LandingPage;

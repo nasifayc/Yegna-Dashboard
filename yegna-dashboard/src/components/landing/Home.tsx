@@ -9,13 +9,13 @@ const Home: React.FC = () => {
     >
       <div className="max-w-lg">
         <h1 className="text-7xl font-bold text-text-dark">
-          Connect, Shop, And Prosper
+          Connect, <span className="text-primary-light">Shop</span>, And Prosper
         </h1>
         <p className="text-text-dark mt-4">
           Connecting Ethiopian buyers and sellers with ease, trust, and
           convenience.
         </p>
-        <button className="mt-8 px-6 py-3 border-white border-2 flex justify-center items-center text-white rounded-full hover:bg-primary-light transition">
+        <button className="mt-8 px-6 py-3 border-white border-2 flex justify-center items-center text-white hover:text-primary-light rounded-full hover:border-primary-light transition duration-300">
           Get Started
           <FaArrowRight className="ml-3" />
         </button>
