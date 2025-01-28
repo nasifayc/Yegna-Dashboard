@@ -23,7 +23,7 @@ export const theme = {
       },
     },
     fontFamily: {
-      sans: ["Roboto", ..._fontFamily.sans],
+      sans: ["Marcellus", "Roboto", ..._fontFamily.sans],
     },
   },
 };

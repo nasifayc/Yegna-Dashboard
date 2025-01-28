@@ -3,18 +3,43 @@ import {
   FaTwitter,
   FaLinkedinIn,
   FaInstagram,
+  FaArrowUp,
 } from "react-icons/fa";
-
+import { useState, useEffect } from "react";
 import logo from "../../assets/logo.png";
 
 const Footer: React.FC = () => {
+  const [showScrollButton, setShowScrollButton] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const homeSection = document.getElementById("home");
+      const scrollTop = window.scrollY;
+
+      if (homeSection) {
+        const homeBottom =
+          homeSection.getBoundingClientRect().bottom + scrollTop;
+        setShowScrollButton(scrollTop > homeBottom);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <footer className="relative bg-background-dark text-gray-300 py-16 px-8 md:px-20">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Company Info */}
         <div>
           <img className="mb-3" src={logo} alt="Logo" />
-
           <p className="text-sm leading-6">
             We provide exceptional services and innovative solutions for all
             your needs. Our mission is to ensure customer satisfaction and
@@ -120,6 +145,16 @@ const Footer: React.FC = () => {
           </a>
         </div>
       </div>
+
+      {showScrollButton && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 bg-background-dark right-8 py-2 px-2 rounded-full text-white hover:text-primary-light  transition duration-300"
+          aria-label="Scroll to top"
+        >
+          <FaArrowUp className="text-base" />
+        </button>
+      )}
     </footer>
   );
 };
