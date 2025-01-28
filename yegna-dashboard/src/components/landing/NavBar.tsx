@@ -1,10 +1,18 @@
 import logo from "../../assets/logo.png";
 import { useState, useEffect } from "react";
 
+import { useModal } from "../../context/ModalContext";
+
 const NavBar: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>("home");
-  const [isVisible, setIsVisible] = useState<boolean>(true); // Track navbar visibility
-  const [lastScrollY, setLastScrollY] = useState<number>(0); // Track last scroll position
+  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [lastScrollY, setLastScrollY] = useState<number>(0);
+
+  const { setShowSignIn } = useModal();
+
+  const handleSignInClick = () => {
+    setShowSignIn(true);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,7 +85,10 @@ const NavBar: React.FC = () => {
           </li>
         ))}
         <li>
-          <button className="px-4 py-1 sm:px-6 sm:py-2 border-white border-2 hover:border-primary-light rounded-full text-text-dark hover:text-primary-light transition duration-300 whitespace-nowrap flex items-center justify-center">
+          <button
+            onClick={handleSignInClick}
+            className="px-4 py-1 sm:px-6 sm:py-2 border-white border-2 hover:border-primary-light rounded-full text-text-dark hover:text-primary-light transition duration-300 whitespace-nowrap flex items-center justify-center"
+          >
             Sign In
           </button>
         </li>

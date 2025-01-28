@@ -1,7 +1,15 @@
+import React from "react";
 import heroImg from "../../assets/landing/hero-img.png";
 import { FaArrowRight } from "react-icons/fa";
+import { useModal } from "../../context/ModalContext";
 
 const Home: React.FC = () => {
+  const { setShowSignIn } = useModal();
+
+  const handleSignInClick = () => {
+    setShowSignIn(true);
+  };
+
   return (
     <section
       id="home"
@@ -15,7 +23,10 @@ const Home: React.FC = () => {
           Connecting Ethiopian buyers and sellers with ease, trust, and
           convenience.
         </p>
-        <button className="mt-8 px-6 py-3 border-white border-2 flex justify-center items-center text-white hover:text-primary-light rounded-full hover:border-primary-light transition duration-300">
+        <button
+          onClick={handleSignInClick}
+          className="mt-8 px-6 py-3 border-white border-2 flex justify-center items-center text-white hover:text-primary-light rounded-full hover:border-primary-light transition duration-300"
+        >
           Get Started
           <FaArrowRight className="ml-3" />
         </button>
