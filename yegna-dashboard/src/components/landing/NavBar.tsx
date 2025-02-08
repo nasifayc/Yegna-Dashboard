@@ -5,8 +5,6 @@ import { useModal } from "../../context/ModalContext";
 
 const NavBar: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>("home");
-  const [isVisible, setIsVisible] = useState<boolean>(true);
-  const [lastScrollY, setLastScrollY] = useState<number>(0);
 
   const { setShowSignIn } = useModal();
 
@@ -16,16 +14,6 @@ const NavBar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-
-      setLastScrollY(currentScrollY);
-
       const sections = ["home", "service", "about-us", "testimonies"];
       let foundSection = activeSection;
 
@@ -49,13 +37,11 @@ const NavBar: React.FC = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [activeSection, lastScrollY]);
+  }, [activeSection]);
 
   return (
     <nav
-      className={`bg-background-dark py-8 px-24 flex justify-between fixed top-0 w-full z-10 transition-transform duration-300 ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
-      }`}
+      className={`bg-background-dark py-8 px-24 flex justify-between fixed top-0 w-full z-10 transition-transform duration-300 `}
     >
       <img src={logo} alt="Logo" />
       <ul className="flex space-x-12">

@@ -15,7 +15,7 @@ const useAuthApiCall = () => {
     const accessToken = response.data;
     dispatch(login({ accessToken }));
     notify("Sign In Successful");
-    navigate("/");
+    navigate("/dashboard");
   };
 
   return { handleLogin };
