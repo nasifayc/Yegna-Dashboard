@@ -1,3 +1,6 @@
+import { useDispatch } from "react-redux";
+import { logout } from "@/store/auth/authSlice";
+
 import { BiMenuAltLeft } from "react-icons/bi";
 import { RiSearch2Line } from "react-icons/ri";
 import { BsMoonStars } from "react-icons/bs";
@@ -13,6 +16,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+
 const NavBar: React.FC = () => {
   return (
     <div className="bg-background-light text-background-dark fixed top-0 left-60 right-0 z-10 h-24 px-6 flex justify-between items-center">
@@ -51,6 +55,7 @@ export default NavBar;
 
 const UserProfileDropdown = () => {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -72,7 +77,14 @@ const UserProfileDropdown = () => {
         <DropdownMenuItem className="flex items-center gap-2 cursor-pointer p-2 hover:bg-gray-100">
           <Settings size={18} /> Settings
         </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-2 cursor-pointer p-2 hover:bg-gray-100 text-red-500">
+        <DropdownMenuItem
+          className="flex items-center gap-2 cursor-pointer p-2 hover:bg-gray-100 text-red-500"
+          onClick={() => {
+            if (window.confirm("Are you sure you want to logout?")) {
+              dispatch(logout());
+            }
+          }}
+        >
           <LogOut size={18} /> Logout
         </DropdownMenuItem>
       </DropdownMenuContent>

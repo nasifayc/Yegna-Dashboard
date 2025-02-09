@@ -13,7 +13,8 @@ const useAuthApiCall = () => {
   const handleLogin = async (data: LoginFormData) => {
     const response = await axios.post(LOGIN_URL, data);
     const accessToken = response.data.accessToken;
-    dispatch(login({ accessToken }));
+    const isSuperAdmin = response.data.isSuperAdmin;
+    dispatch(login({ accessToken, isSuperAdmin }));
     localStorage.setItem("token", accessToken);
     notify("Sign In Successful");
     navigate("/dashboard");

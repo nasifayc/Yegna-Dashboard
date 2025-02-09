@@ -13,12 +13,14 @@ export const sidebarItems = [
   {
     title: "Dashboard",
     icon: MdOutlineDashboard,
+    code_name: "can_view_dashboard",
     subItems: [{ title: "Overview", key: "overview" }],
   },
 
   {
     title: "Product",
     icon: MdOutlineProductionQuantityLimits,
+    code_name: "can_view_products",
     subItems: [
       { title: "All", key: "product/all" },
       { title: "Add New", key: "product/add" },
@@ -28,6 +30,7 @@ export const sidebarItems = [
   {
     title: "Category",
     icon: TbCategory2,
+    code_name: "can_view_category",
     subItems: [
       { title: "All", key: "category/all" },
       { title: "Add New", key: "category/add" },
@@ -37,6 +40,7 @@ export const sidebarItems = [
   {
     title: "User",
     icon: FaRegUser,
+    code_name: "can_view_user",
     subItems: [
       { title: "All", key: "user/all" },
       //   { title: "Add New", key: "products-add" },
@@ -46,6 +50,7 @@ export const sidebarItems = [
   {
     title: "Vendor",
     icon: MdOutlineShoppingBag,
+    code_name: "can_view_sellers",
     subItems: [
       { title: "All", key: "vendor/all" },
       { title: "Add New", key: "vendor-add" },
@@ -55,11 +60,13 @@ export const sidebarItems = [
   {
     title: "Transaction",
     icon: AiOutlineTransaction,
+    code_name: "can_view_purchases",
     subItems: [{ title: "All", key: "transaction/all" }],
   },
   {
     title: "Role",
     icon: LiaUniversalAccessSolid,
+    code_name: "can_view_roles",
     subItems: [
       { title: "All", key: "role/all" },
       { title: "Add New", key: "role-add" },
@@ -69,6 +76,7 @@ export const sidebarItems = [
   {
     title: "Permission",
     icon: FaSortAmountDown,
+    code_name: "can_view_Permissions",
     subItems: [{ title: "All", key: "permission/all" }],
   },
 ];
