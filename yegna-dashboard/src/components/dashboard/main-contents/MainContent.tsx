@@ -1,13 +1,11 @@
-type MainContentProps = {
-  activeBar: string;
-};
-const MainContent: React.FC<MainContentProps> = ({ activeBar }) => {
+const MainContent: React.FC = () => {
   return (
-    <div className="flex-1 p-6 bg-gray-100">
+    <div className="flex-1 pl-60 pt-24 bg-gray-100 ">
       <h2 className="text-2xl font-semibold mb-4">
-        Current Section: {activeBar.replace("-", " ")}
+        {/* Current Section: {activeBar.replace("-", " ")} */}
       </h2>
-      <p>This is the content for {activeBar}.</p>
+      {/* <p>This is the content for {activeBar}.</p> */}
+      <div className="h-screen bg-gray-500"></div>
     </div>
   );
 };

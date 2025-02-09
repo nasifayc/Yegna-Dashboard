@@ -1,24 +1,12 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
-import PageNotFound from "./pages/PageNotFound";
-import Dashboard from "./components/dashboard/Dashboard";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes/router";
 // import Dashboard from "./pages/Dashboard";
 // import { useEffect, useState } from "react";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <LandingPage />,
-    errorElement: <PageNotFound />,
-  },
-  {
-    path: "/dashboard",
-    element: <Dashboard />,
-  },
-]);
 function App() {
   return <RouterProvider router={router} />;
 }
+export default App;
 
 // function App() {
 //   const [darkMode, setDarkMode] = useState(false);
@@ -56,5 +44,3 @@ function App() {
 //     </div>
 //   );
 // }
-
-export default App;

@@ -5,9 +5,11 @@ interface AuthState {
   accessToken: string | null;
 }
 
+const token = localStorage.getItem("token");
+
 const initialState: AuthState = {
-  isAuthenticated: false,
-  accessToken: null,
+  isAuthenticated: !!token,
+  accessToken: token,
 };
 
 const authSlice = createSlice({
