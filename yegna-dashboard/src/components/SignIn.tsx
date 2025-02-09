@@ -2,10 +2,19 @@ import { useModal } from "../context/ModalContext";
 import { FaTimes } from "react-icons/fa"; // Importing the 'X' icon
 import useAuthForm from "../hooks/auth/UseAuthForm";
 import Loading from "./Loading";
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "@/store/store";
 
 const SignInPage: React.FC = () => {
   const { showSignIn, setShowSignIn } = useModal();
   const { register, handleSubmit, errors, loading, onSubmit } = useAuthForm();
+  const navigate = useNavigate();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+
+  if (isAuthenticated) {
+    navigate("/dashboard");
+    return;
+  }
 
   const handleCloseModal = () => {
     setShowSignIn(false);
