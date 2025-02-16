@@ -41,13 +41,20 @@ import useCreateProductForm, {
   ProductSchemaData,
 } from "@/hooks/product/UseCreateProductForm";
 import { useAppSelector } from "@/store/store";
-import { PRODUCT_CREATE_URL } from "@/utils/api/ApiRoutes";
+import { CATEGORY_LIST_URL, PRODUCT_CREATE_URL } from "@/utils/api/ApiRoutes";
 import axios from "axios";
 import { CloudUpload, Paperclip } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+interface CategoryProps {
+  id: string;
+  name: string;
+}
 
 const AddProduct: React.FC = () => {
   const [files, setFiles] = useState<File[] | null>(null);
+  const [categories, setCategories] = useState<CategoryProps[]>([]);
+
   const dropZoneConfig = {
     maxFiles: 5,
     maxSize: 1024 * 1024 * 4,
@@ -58,6 +65,25 @@ const AddProduct: React.FC = () => {
   const token = useAppSelector((state) => state.auth.accessToken);
 
   const form = useCreateProductForm();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<{ categories: CategoryProps[] }>(
+          CATEGORY_LIST_URL,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        setCategories(response.data.categories);
+      } catch (err) {
+        console.error("Error getting product list", err);
+        notify(`Server Error: ${err}`);
+      }
+    };
+    fetchData();
+  }, [token]);
 
   const onSubmit = async (data: ProductSchemaData) => {
     setSaving(true);
@@ -195,13 +221,21 @@ const AddProduct: React.FC = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a valida category" />
+                          <SelectValue placeholder="-- Select  Parent Category --" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="category1">Category 1</SelectItem>
-                        <SelectItem value="category2">Category 2</SelectItem>
-                        <SelectItem value="category3">Category 2</SelectItem>
+                      <SelectContent className="bg-background-light">
+                        {categories.length == 0 ? (
+                          <p className="text-gray-500 p-2">
+                            No categories available
+                          </p>
+                        ) : (
+                          categories.map((category) => (
+                            <SelectItem key={category.id} value={category.id}>
+                              {category.name}
+                            </SelectItem>
+                          ))
+                        )}
                       </SelectContent>
                     </Select>
 

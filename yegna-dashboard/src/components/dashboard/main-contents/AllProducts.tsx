@@ -26,7 +26,7 @@ import { Button } from "@/components/ui/button";
 import { ToastContainer } from "react-toastify";
 
 interface ProductProps {
-  id: number;
+  // id: number;
   images: string[];
   name: string;
   price: number;
