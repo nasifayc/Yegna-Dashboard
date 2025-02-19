@@ -47,7 +47,7 @@ import { CloudUpload, Paperclip } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface CategoryProps {
-  id: string;
+  _id: string;
   name: string;
 }
 
@@ -88,10 +88,39 @@ const AddProduct: React.FC = () => {
   const onSubmit = async (data: ProductSchemaData) => {
     setSaving(true);
     try {
-      await axios.post(PRODUCT_CREATE_URL, data, {
+      const formData = new FormData();
+      // Required fields
+      formData.append("name", data.name);
+      formData.append("price", data.price.toString());
+      formData.append("stock", data.stock.toString());
+      formData.append("category", data.category);
+
+      // Optional fields
+      if (data.description) formData.append("description", data.description);
+      if (data.brand) formData.append("brand", data.brand);
+      if (data.sku) formData.append("sku", data.sku);
+      if (data.discount !== undefined)
+        formData.append("discount", data.discount.toString());
+
+      // Boolean values need to be strings for FormData
+      if (data.isFeatured !== undefined)
+        formData.append("isFeatured", data.isFeatured.toString());
+      if (data.isNew !== undefined)
+        formData.append("isNew", data.isNew.toString());
+      if (data.isTrending !== undefined)
+        formData.append("isTrending", data.isTrending.toString());
+
+      if (data.tags && data.tags.length > 0) {
+        data.tags.forEach((tag) => formData.append("tags", tag));
+      }
+
+      if (files) {
+        files.forEach((file) => formData.append("images", file));
+      }
+      await axios.post(PRODUCT_CREATE_URL, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       });
 
@@ -194,11 +223,10 @@ const AddProduct: React.FC = () => {
                         placeholder="stock"
                         type="number"
                         {...field}
-                        onChange={(e) =>
-                          field.onChange(
-                            e.target.value ? Number(e.target.value) : null
-                          )
-                        }
+                        onChange={(e) => {
+                          const intValue = parseInt(e.target.value, 10);
+                          field.onChange(isNaN(intValue) ? null : intValue);
+                        }}
                       />
                     </FormControl>
                     <FormDescription>
@@ -217,11 +245,11 @@ const AddProduct: React.FC = () => {
                     <FormLabel>Category</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      defaultValue={field.value || ""}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="-- Select  Parent Category --" />
+                          <SelectValue placeholder="-- Select Category --" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="bg-background-light">
@@ -231,7 +259,7 @@ const AddProduct: React.FC = () => {
                           </p>
                         ) : (
                           categories.map((category) => (
-                            <SelectItem key={category.id} value={category.id}>
+                            <SelectItem key={category._id} value={category._id}>
                               {category.name}
                             </SelectItem>
                           ))
@@ -354,7 +382,15 @@ const AddProduct: React.FC = () => {
                   <FormItem>
                     <FormLabel>Discount</FormLabel>
                     <FormControl>
-                      <Input placeholder="Discount" type="number" {...field} />
+                      <Input
+                        placeholder="Discount"
+                        type="number"
+                        {...field}
+                        onChange={(e) => {
+                          const intValue = parseInt(e.target.value, 10);
+                          field.onChange(isNaN(intValue) ? null : intValue);
+                        }}
+                      />
                     </FormControl>
                     {/* <FormDescription>
                       Discount will attract users 50x larger.

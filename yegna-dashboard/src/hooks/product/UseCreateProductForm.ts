@@ -27,10 +27,7 @@ const productSchema = z.object({
     .max(100, "Discount must not exceed 100")
     .optional(),
   sku: z.string().trim().optional(),
-  images: z
-    .array(z.string().url().trim())
-    .min(1, "At least one image is required")
-    .max(5, "You can upload up to five images"),
+  images: z.any(),
 });
 
 export type ProductSchemaData = z.infer<typeof productSchema>;

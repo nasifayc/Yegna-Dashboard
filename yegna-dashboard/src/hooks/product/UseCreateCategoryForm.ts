@@ -10,7 +10,7 @@ const categorySchema = z.object({
     .string()
     .regex(/^[0-9a-fA-F]{24}$/, "Category must be a valid MongoDB ObjectId")
     .optional(),
-  image: z.string().url().trim().nonempty("Image URL is required"),
+  image: z.any(),
 });
 
 export type CategorySchemaData = z.infer<typeof categorySchema>;

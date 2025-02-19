@@ -1,6 +1,10 @@
 import { notify } from "@/components/Toast";
 import { useAppSelector } from "@/store/store";
-import { CATEGORY_LIST_URL } from "@/utils/api/ApiRoutes";
+import {
+  API_BASE_URL,
+  CATEGORY_DELETE_URL,
+  CATEGORY_LIST_URL,
+} from "@/utils/api/ApiRoutes";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
@@ -11,6 +15,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 import {
   Table,
@@ -26,10 +38,11 @@ import { Button } from "@/components/ui/button";
 import { ToastContainer } from "react-toastify";
 
 interface CategoryProps {
+  _id: string;
   name: string;
-  image: string;
-  parentCategory: { name: string };
-  isActive: boolean;
+  image: string | null;
+  parentCategory: { name: string } | null;
+  isActive: boolean | null;
   createdAt: Date;
 }
 const AllCategory: React.FC = () => {
@@ -57,6 +70,22 @@ const AllCategory: React.FC = () => {
     fetchData();
   }, [token]);
 
+  const deleteCategory = async (id: string) => {
+    console.log("Id: " + id);
+    try {
+      await axios.delete(`${CATEGORY_DELETE_URL}/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCategories((prevCategories) =>
+        prevCategories.filter((c) => c._id !== id)
+      );
+      notify("Category deleted successfully");
+    } catch (err) {
+      console.error("Error deleting category", err);
+      notify(`Server Error: ${err}`);
+    }
+  };
+
   const totalPages = Math.ceil(categories.length / entriesPerPage);
   const paginatedCategories = categories.slice(
     (currentPage - 1) * entriesPerPage,
@@ -78,10 +107,12 @@ const AllCategory: React.FC = () => {
             <TableHeader>
               <TableRow>
                 <TableHead>ID</TableHead>
+                <TableHead>Name</TableHead>
                 <TableHead>Image</TableHead>
                 <TableHead>Parent Category</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Created Date</TableHead>
+                <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -89,17 +120,47 @@ const AllCategory: React.FC = () => {
                 <p>Empty List</p>
               ) : (
                 paginatedCategories.map((category, index) => (
-                  <TableRow>
+                  <TableRow key={category._id}>
                     <TableCell>{index + 1}</TableCell>
+                    <TableCell>{category.name}</TableCell>
                     <TableCell>
-                      <img src={`${category.image}`} alt="Category Image" />
+                      <img
+                        src={`${API_BASE_URL}/${category.image?.replace(
+                          /\\/g,
+                          "/"
+                        )}`}
+                        alt="Category Image"
+                        className="w-10 h-10 rounded-full"
+                      />
                     </TableCell>
-                    <TableCell>{category.parentCategory.name}</TableCell>
+                    <TableCell>{category.parentCategory?.name}</TableCell>
                     <TableCell>
                       {category.isActive ? "Active" : "In Active"}
                     </TableCell>
                     <TableCell>
                       {new Date(category.createdAt).toISOString()}
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuLabel>Edit</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem
+                            onClick={() => {
+                              if (
+                                window.confirm(
+                                  `Are you sure you want to delete ${category.name}?`
+                                )
+                              ) {
+                                deleteCategory(category._id);
+                              }
+                            }}
+                          >
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </TableCell>
                   </TableRow>
                 ))

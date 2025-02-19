@@ -47,9 +47,10 @@ import { CATEGORY_CREATE_URL, CATEGORY_LIST_URL } from "@/utils/api/ApiRoutes";
 import axios from "axios";
 import { CloudUpload, Paperclip } from "lucide-react";
 import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 interface CategoryProps {
-  id: string;
+  _id: string;
   name: string;
 }
 const AddCategory: React.FC = () => {
@@ -89,10 +90,24 @@ const AddCategory: React.FC = () => {
   const onSubmit = async (data: CategorySchemaData) => {
     setSaving(true);
     try {
-      await axios.post(CATEGORY_CREATE_URL, data, {
+      const formData = new FormData();
+
+      formData.append("name", data.name);
+      formData.append("description", data.description || "");
+      if (data.parentCategory) {
+        formData.append("parentCategory", data.parentCategory);
+      }
+
+      if (file) {
+        formData.append("image", file);
+      }
+
+      console.log(formData);
+
+      await axios.post(`${CATEGORY_CREATE_URL}?type=category`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       });
 
@@ -168,28 +183,27 @@ const AddCategory: React.FC = () => {
                     <FormLabel>Parent Category</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value || ""}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="-- Select  Parent Category --" />
+                          <SelectValue placeholder="-- Select Parent Category --" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="bg-background-light">
-                        {categories.length == 0 ? (
+                        {categories.length === 0 ? (
                           <p className="text-gray-500 p-2">
                             No categories available
                           </p>
                         ) : (
                           categories.map((category) => (
-                            <SelectItem key={category.id} value={category.id}>
+                            <SelectItem key={category._id} value={category._id}>
                               {category.name}
                             </SelectItem>
                           ))
                         )}
                       </SelectContent>
                     </Select>
-
                     <FormMessage className="text-red-600" />
                   </FormItem>
                 )}
@@ -251,6 +265,7 @@ const AddCategory: React.FC = () => {
           </Form>
         </CardContent>
       </Card>
+      <ToastContainer />
     </div>
   );
 };

@@ -1,8 +1,20 @@
 import { notify } from "@/components/Toast";
 import { useAppSelector } from "@/store/store";
-import { PRODUCT_LIST_URL } from "@/utils/api/ApiRoutes";
+import {
+  API_BASE_URL,
+  PRODUCT_DELETE_URL,
+  PRODUCT_LIST_URL,
+} from "@/utils/api/ApiRoutes";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Card,
   CardContent,
@@ -26,14 +38,14 @@ import { Button } from "@/components/ui/button";
 import { ToastContainer } from "react-toastify";
 
 interface ProductProps {
-  // id: number;
+  _id: string;
   images: string[];
   name: string;
   price: number;
   stock: number;
-  category: string;
-  rating: number;
-  createdAt: string;
+  category: { _id: string; name: string };
+  averageRating: number;
+  updatedAt: string;
 }
 
 const AllProducts: React.FC = () => {
@@ -60,6 +72,21 @@ const AllProducts: React.FC = () => {
     };
     fetchData();
   }, [token]);
+
+  const deleteProduct = async (id: string) => {
+    try {
+      await axios.delete(`${PRODUCT_DELETE_URL}/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product._id !== id)
+      );
+      notify("Product deleted successfully");
+    } catch (err) {
+      console.error("Error deleting category", err);
+      notify(`Server Error: ${err}`);
+    }
+  };
 
   const totalPages = Math.ceil(products.length / entriesPerPage);
   const paginatedProducts = products.slice(
@@ -88,6 +115,7 @@ const AllProducts: React.FC = () => {
                 <TableHead>Category</TableHead>
                 <TableHead>Rating</TableHead>
                 <TableHead>Date</TableHead>
+                <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -95,18 +123,51 @@ const AllProducts: React.FC = () => {
                 <p>Empty List</p>
               ) : (
                 paginatedProducts.map((product, index) => (
-                  <TableRow>
+                  <TableRow key={product._id}>
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>
-                      <img src={`${product.images[0]}`} alt="Product Image" />
+                      <img
+                        src={`${API_BASE_URL}/${product.images[0].replace(
+                          /\\/g,
+                          "/"
+                        )}`}
+                        alt="Product Image"
+                        className="w-10 h-10 rounded-full"
+                      />
                     </TableCell>
                     <TableCell>{product.name}</TableCell>
                     <TableCell>{product.price}</TableCell>
                     <TableCell>{product.stock}</TableCell>
-                    <TableCell>{product.category}</TableCell>
-                    <TableCell>{product.rating}</TableCell>
+                    <TableCell>{product.category?.name}</TableCell>
+                    <TableCell>{product.averageRating}</TableCell>
                     <TableCell>
-                      {new Date(product.createdAt).toLocaleString()}
+                      {new Date(product.updatedAt).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuLabel>Edit</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem
+                            onClick={() => {
+                              if (
+                                window.confirm(
+                                  `Are you sure you want to delete ${product.name}?`
+                                )
+                              ) {
+                                deleteProduct(product._id);
+                              }
+                            }}
+                          >
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </TableCell>
                   </TableRow>
                 ))
