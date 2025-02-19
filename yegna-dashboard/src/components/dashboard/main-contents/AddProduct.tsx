@@ -45,6 +45,8 @@ import { CATEGORY_LIST_URL, PRODUCT_CREATE_URL } from "@/utils/api/ApiRoutes";
 import axios from "axios";
 import { CloudUpload, Paperclip } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 interface CategoryProps {
   _id: string;
@@ -54,6 +56,7 @@ interface CategoryProps {
 const AddProduct: React.FC = () => {
   const [files, setFiles] = useState<File[] | null>(null);
   const [categories, setCategories] = useState<CategoryProps[]>([]);
+  const navigate = useNavigate();
 
   const dropZoneConfig = {
     maxFiles: 5,
@@ -126,6 +129,7 @@ const AddProduct: React.FC = () => {
 
       notify("Product created successfully");
       form.reset();
+      navigate("/dashboard/product/all");
     } catch (err) {
       console.log("Failed to save", err);
       notify("Failed to save product");
@@ -476,6 +480,7 @@ const AddProduct: React.FC = () => {
           <p>Card Footer</p>
         </CardFooter> */}
       </Card>
+      <ToastContainer />
     </div>
   );
 };

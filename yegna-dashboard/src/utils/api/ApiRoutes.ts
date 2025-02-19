@@ -10,8 +10,10 @@ export const PRODUCT_UPDATE_URL = `${API_BASE_URL}/api/admin/products/update`;
 export const PRODUCT_DELETE_URL = `${API_BASE_URL}/api/admin/products/delete`;
 
 // Category
-
 export const CATEGORY_LIST_URL = `${API_BASE_URL}/api/admin/categories/all`;
 export const CATEGORY_CREATE_URL = `${API_BASE_URL}/api/admin/categories/create`;
 export const CATEGORY_UPDATE_URL = `${API_BASE_URL}/api/admin/categories/update`;
 export const CATEGORY_DELETE_URL = `${API_BASE_URL}/api/admin/categories/delete`;
+
+// User
+export const USER_LIST_URL = `${API_BASE_URL}/api/admin/users/all`;
