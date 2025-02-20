@@ -17,3 +17,9 @@ export const CATEGORY_DELETE_URL = `${API_BASE_URL}/api/admin/categories/delete`
 
 // User
 export const USER_LIST_URL = `${API_BASE_URL}/api/admin/users/all`;
+
+// Admins
+export const ADMINS_LIST_URL = `${API_BASE_URL}/api/admin/admins`;
+
+// Permission
+export const PERMISSION_LIST_URL = `${API_BASE_URL}/api/admin/roles//permissions`;

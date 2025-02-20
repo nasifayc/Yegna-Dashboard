@@ -31,6 +31,14 @@ const LazyAddCategory = React.lazy(
   () => import("../components/dashboard/main-contents/AddCategory")
 );
 
+const LazyAllVendors = React.lazy(
+  () => import("../components/dashboard/main-contents/AllVendors")
+);
+
+const LazyAllPermissions = React.lazy(
+  () => import("../components/dashboard/main-contents/AllPermissions")
+);
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -110,6 +118,22 @@ export const router = createBrowserRouter([
         element: (
           <React.Suspense fallback="Loading...">
             <LazyAllUsers />
+          </React.Suspense>
+        ),
+      },
+      {
+        path: "vendor/all",
+        element: (
+          <React.Suspense fallback="Loading...">
+            <LazyAllVendors />
+          </React.Suspense>
+        ),
+      },
+      {
+        path: "permission/all",
+        element: (
+          <React.Suspense fallback="Loading...">
+            <LazyAllPermissions />
           </React.Suspense>
         ),
       },
