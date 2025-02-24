@@ -1,6 +1,6 @@
 import { notify } from "@/components/Toast";
 import { useAppSelector } from "@/store/store";
-import { ADMINS_LIST_URL } from "@/utils/api/ApiRoutes";
+import { ROLES_DELETE_URL, ROLES_LIST_URL } from "@/utils/api/ApiRoutes";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
@@ -11,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import {
   Card,
   CardContent,
@@ -33,18 +34,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { ToastContainer } from "react-toastify";
 
-interface VendorProps {
+interface RoleProps {
   _id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  is_active: boolean;
-  roles: { role_name: string };
+  role_name: string;
+  description: string;
+  permissions: string[];
   createdAt: string;
 }
 
-const AllVendors: React.FC = () => {
-  const [vendors, setVendors] = useState<VendorProps[]>([]);
+const AllRoles: React.FC = () => {
+  const [roles, setRoles] = useState<RoleProps[]>([]);
   const [entriesPerPage, setEntriesPerPage] = useState(15);
   const [currentPage, setCurrentPage] = useState(1);
   const token = useAppSelector((state) => state.auth.accessToken);
@@ -52,35 +51,34 @@ const AllVendors: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<{ admins: VendorProps[] }>(
-          ADMINS_LIST_URL,
+        const response = await axios.get<{ roles: RoleProps[] }>(
+          ROLES_LIST_URL,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-
-        setVendors(response.data.admins);
+        if (response.status === 200) {
+          setRoles(response.data.roles);
+        }
       } catch (err) {
         let error = "Server Error";
         if (axios.isAxiosError(err)) {
           error = err.response?.data?.message;
           notify(error);
         }
-        console.error("Error getting product list", err);
+        console.error("Error getting Role list", err);
       }
     };
     fetchData();
   }, [token]);
 
-  const deleteVendor = async (id: string) => {
+  const deleteRole = async (id: string) => {
     try {
-      await axios.delete(`${ADMINS_LIST_URL}/${id}`, {
+      await axios.delete(`${ROLES_DELETE_URL}/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setVendors((prevVendors) =>
-        prevVendors.filter((vendor) => vendor._id !== id)
-      );
-      notify("Product deleted successfully");
+      setRoles((prevRoles) => prevRoles.filter((role) => role._id !== id));
+      notify("Role deleted successfully");
     } catch (err) {
       console.error("Error deleting admin", err);
       let error = "Server Error";
@@ -91,8 +89,8 @@ const AllVendors: React.FC = () => {
     }
   };
 
-  const totalPages = Math.ceil(vendors.length / entriesPerPage);
-  const paginatedVendors = vendors.slice(
+  const totalPages = Math.ceil(roles.length / entriesPerPage);
+  const paginatedVendors = roles.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
@@ -100,47 +98,40 @@ const AllVendors: React.FC = () => {
     <div className="p-6">
       <Card>
         <CardHeader>
-          <CardTitle>All Vendors</CardTitle>
+          <CardTitle>All Roles</CardTitle>
           <CardDescription>
-            View, edit, and delete vendors in the system.
+            View, edit, and delete Role in the system.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
-            <TableCaption>A list of your Products</TableCaption>
+            <TableCaption>A list of Role</TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead>ID</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Is Active</TableHead>
-                <TableHead>Date</TableHead>
+                <TableHead>Role Name</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead>Permissions</TableHead>
+                <TableHead>Created At</TableHead>
                 <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {vendors.length === 0 ? (
+              {roles.length === 0 ? (
                 <TableRow>
                   <TableCell>
                     <p>Empty List</p>
                   </TableCell>
                 </TableRow>
               ) : (
-                paginatedVendors.map((vendor, index) => (
-                  <TableRow key={vendor._id}>
+                paginatedVendors.map((role, index) => (
+                  <TableRow key={role._id}>
                     <TableCell>{index + 1}</TableCell>
+                    <TableCell>{role.role_name}</TableCell>
+                    <TableCell>{role.description}</TableCell>
+                    <TableCell>{role.permissions.length}</TableCell>
                     <TableCell>
-                      {vendor.first_name} {vendor.last_name}
-                    </TableCell>
-                    <TableCell>{vendor.email}</TableCell>
-                    <TableCell>{vendor.roles.role_name}</TableCell>
-                    <TableCell>
-                      {vendor.is_active ? "Active" : "In Active"}
-                    </TableCell>
-
-                    <TableCell>
-                      {new Date(vendor.createdAt).toLocaleDateString("en-US", {
+                      {new Date(role.createdAt).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
                         year: "numeric",
@@ -156,10 +147,10 @@ const AllVendors: React.FC = () => {
                             onClick={() => {
                               if (
                                 window.confirm(
-                                  `Are you sure you want to delete ${vendor.first_name}?`
+                                  `Are you sure you want to delete ${role.role_name}?`
                                 )
                               ) {
-                                deleteVendor(vendor._id);
+                                deleteRole(role._id);
                               }
                             }}
                           >
@@ -215,4 +206,4 @@ const AllVendors: React.FC = () => {
   );
 };
 
-export default AllVendors;
+export default AllRoles;

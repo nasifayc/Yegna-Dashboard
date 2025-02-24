@@ -5,9 +5,7 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import { RiSearch2Line } from "react-icons/ri";
 import { BsMoonStars } from "react-icons/bs";
 import { LuBellRing } from "react-icons/lu";
-import { useState } from "react";
-import profile from "../../assets/landing/profile1.jpg";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { useEffect, useState } from "react";
 
 import { User, LogOut, Settings } from "lucide-react";
 import {
@@ -16,6 +14,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { ADMIN_CURRENT_URL, API_BASE_URL } from "@/utils/api/ApiRoutes";
+import { useAppSelector } from "@/store/store";
+import axios from "axios";
+import { notify } from "../Toast";
 
 const NavBar: React.FC = () => {
   return (
@@ -45,7 +47,7 @@ const NavBar: React.FC = () => {
         <div className=" p-1 border-2 border-gray-300 rounded-md">
           <LuBellRing size={20} />
         </div>
-        <UserProfileDropdown />
+        {/* <UserProfileDropdown /> */}
       </div>
     </div>
   );
@@ -53,21 +55,55 @@ const NavBar: React.FC = () => {
 
 export default NavBar;
 
+interface AdminProps {
+  _id: string;
+  first_name: string;
+  last_name: string;
+  profile_photo: string;
+}
+
 const UserProfileDropdown = () => {
   const [open, setOpen] = useState(false);
+  const [admin, setAdmin] = useState<AdminProps>();
   const dispatch = useDispatch();
+
+  const token = useAppSelector((state) => state.auth.accessToken);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<{ admin: AdminProps }>(
+          ADMIN_CURRENT_URL,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        setAdmin(response.data.admin);
+      } catch (err) {
+        let error = "Server Error";
+        if (axios.isAxiosError(err)) {
+          error = err.response?.data?.message;
+          notify(error);
+        }
+        console.error("Error getting product list", err);
+      }
+    };
+    fetchData();
+  }, [token]);
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <button className="flex items-center gap-2 px-4 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition">
           <img
-            src={profile}
+            src={`${API_BASE_URL}/${admin?.profile_photo?.replace(/\\/g, "/")}`}
             alt="User"
-            className="w-8 h-8 rounded-full object-cover"
+            className="w-10 h-10 rounded-full object-cover"
           />
-          <span className="font-medium">John Doe</span>
-          <MdOutlineKeyboardArrowDown className="text-black" />
+          <span className="font-medium">
+            {admin?.first_name} {admin?.last_name}
+          </span>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-48 bg-white shadow-md rounded-md p-2">

@@ -15,25 +15,36 @@ const Sidebar: React.FC = () => {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [current, setCurrent] = useState<number>(0);
   const [permissions, setPermissions] = useState<string[]>([]);
-  const isSuperAdmin = useAppSelector((state) => state.auth.isAuthenticated);
+  const isSuperAdmin = useAppSelector((state) => state.auth.isSuperAdmin);
   const token = useAppSelector((state) => state.auth.accessToken);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("Fetching Sidebar permission data...");
         const response = await axios.get(GET_PERMISSIONS_URL, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        setPermissions(response.data.permissions);
+        if (response.data && Array.isArray(response.data.permissions)) {
+          setPermissions(response.data.permissions);
+        } else {
+          setPermissions([]);
+          console.log(response.data);
+          console.error(
+            "Permissions data is missing or invalid",
+            response.data
+          );
+        }
       } catch (err) {
         console.error("Error fetching permissions", err);
       }
     };
 
     if (!isSuperAdmin) {
+      console.log("Usr is not a super admin then fetching data");
       fetchData();
     }
   }, [isSuperAdmin, token]);
@@ -51,6 +62,8 @@ const Sidebar: React.FC = () => {
           if (!isSuperAdmin && !permissions.includes(item.code_name)) {
             return null;
           }
+
+          console.log(item.title);
           const Icon = item.icon;
           const isExpanded = expanded === item.title;
 

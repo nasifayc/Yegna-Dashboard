@@ -35,6 +35,18 @@ const LazyAllVendors = React.lazy(
   () => import("../components/dashboard/main-contents/AllVendors")
 );
 
+const LazyAddVendor = React.lazy(
+  () => import("../components/dashboard/main-contents/AddVendor")
+);
+
+const LazyAllRoles = React.lazy(
+  () => import("../components/dashboard/main-contents/AllRoles")
+);
+
+const LazyCreateRole = React.lazy(
+  () => import("../components/dashboard/main-contents/AddRole")
+);
+
 const LazyAllPermissions = React.lazy(
   () => import("../components/dashboard/main-contents/AllPermissions")
 );
@@ -129,6 +141,32 @@ export const router = createBrowserRouter([
           </React.Suspense>
         ),
       },
+      {
+        path: "vendor/add",
+        element: (
+          <React.Suspense fallback="Loading...">
+            <LazyAddVendor />
+          </React.Suspense>
+        ),
+      },
+      {
+        path: "role/all",
+        element: (
+          <React.Suspense fallback="Loading...">
+            <LazyAllRoles />
+          </React.Suspense>
+        ),
+      },
+
+      {
+        path: "role/add",
+        element: (
+          <React.Suspense fallback="Loading...">
+            <LazyCreateRole />
+          </React.Suspense>
+        ),
+      },
+
       {
         path: "permission/all",
         element: (

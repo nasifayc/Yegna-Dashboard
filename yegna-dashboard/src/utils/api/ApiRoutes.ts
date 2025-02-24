@@ -1,6 +1,7 @@
 export const API_BASE_URL = "http://localhost:3000";
 export const LOGIN_URL = `${API_BASE_URL}/api/admin/auth/sign-in`;
 export const GET_PERMISSIONS_URL = `${API_BASE_URL}/api/admin/admins/get-permissions}`;
+
 export const DASHBOARD_DATA_URL = `${API_BASE_URL}/api/admin/dashboard/all`;
 
 // Product
@@ -20,6 +21,13 @@ export const USER_LIST_URL = `${API_BASE_URL}/api/admin/users/all`;
 
 // Admins
 export const ADMINS_LIST_URL = `${API_BASE_URL}/api/admin/admins`;
+export const ADMIN_CURRENT_URL = `${API_BASE_URL}/api/admin/get-admin`;
+
+// Roles
+export const ROLES_LIST_URL = `${API_BASE_URL}/api/admin/roles/all`;
+export const ROLES_CREATE_URL = `${API_BASE_URL}/api/admin/roles/create`;
+export const ROLES_UPDATE_URL = `${API_BASE_URL}/api/admin/roles/update`;
+export const ROLES_DELETE_URL = `${API_BASE_URL}/api/admin/roles/delete`;
 
 // Permission
 export const PERMISSION_LIST_URL = `${API_BASE_URL}/api/admin/roles//permissions`;

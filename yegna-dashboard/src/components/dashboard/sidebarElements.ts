@@ -53,7 +53,7 @@ export const sidebarItems = [
     code_name: "can_view_sellers",
     subItems: [
       { title: "All", key: "vendor/all" },
-      { title: "Add New", key: "vendor-add" },
+      { title: "Add New", key: "vendor/add" },
     ],
   },
 
@@ -69,7 +69,7 @@ export const sidebarItems = [
     code_name: "can_view_roles",
     subItems: [
       { title: "All", key: "role/all" },
-      { title: "Add New", key: "role-add" },
+      { title: "Add New", key: "role/add" },
     ],
   },
 
