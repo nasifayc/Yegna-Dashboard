@@ -15,7 +15,7 @@ const Sidebar: React.FC = () => {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [current, setCurrent] = useState<number>(0);
   const [permissions, setPermissions] = useState<string[]>([]);
-  const isSuperAdmin = useAppSelector((state) => state.auth.isSuperAdmin);
+  // const isSuperAdmin = useAppSelector((state) => state.auth.isSuperAdmin);
   const token = useAppSelector((state) => state.auth.accessToken);
 
   useEffect(() => {
@@ -28,11 +28,13 @@ const Sidebar: React.FC = () => {
           },
         });
 
+        console.log(response);
+
         if (response.data && Array.isArray(response.data.permissions)) {
           setPermissions(response.data.permissions);
         } else {
           setPermissions([]);
-          console.log(response.data);
+
           console.error(
             "Permissions data is missing or invalid",
             response.data
@@ -43,11 +45,8 @@ const Sidebar: React.FC = () => {
       }
     };
 
-    if (!isSuperAdmin) {
-      console.log("Usr is not a super admin then fetching data");
-      fetchData();
-    }
-  }, [isSuperAdmin, token]);
+    fetchData();
+  }, [token]);
 
   const toggleExpanded = (title: string, index: number) => {
     setExpanded((prev) => (prev === title ? null : title));
@@ -55,15 +54,14 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="fixed w-60 top-0 bottom-0 bg-background-light">
+    <div className="fixed w-60 top-0 bottom-0 bg-background-light dark:bg-background-dark">
       <img src={logoDark} alt="logo" className="h-12 pl-6 my-6" />
       <ul>
         {sidebarItems.map((item, index) => {
-          if (!isSuperAdmin && !permissions.includes(item.code_name)) {
+          if (!permissions.includes(item.code_name)) {
             return null;
           }
 
-          console.log(item.title);
           const Icon = item.icon;
           const isExpanded = expanded === item.title;
 
@@ -73,11 +71,11 @@ const Sidebar: React.FC = () => {
               className="w-full cursor-pointer text-gray-600"
             >
               <div
-                className={`flex justify-between items-center py-3  px-6 ${
+                className={`flex justify-between items-center py-3 hover:bg-gradient-to-l from-primary-light  px-6 ${
                   index === current
                     ? "bg-gradient-to-l from-primary-light to-transparent"
                     : ""
-                }`}
+                } transition-all`}
                 onClick={() => toggleExpanded(item.title, index)}
               >
                 <div className="flex items-center">

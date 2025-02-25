@@ -22,6 +22,8 @@ import { DASHBOARD_DATA_URL } from "@/utils/api/ApiRoutes";
 import Loading from "@/components/Loading";
 import { ToastContainer } from "react-toastify";
 
+import Chart from "react-apexcharts";
+
 interface CardProps {
   title: string;
   value: number;
@@ -125,17 +127,84 @@ const OverView: React.FC = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-6">
-      {loading ? (
-        <div className="col-span-full flex justify-center">
-          <Loading />
-        </div>
-      ) : (
-        stats.map((stat) => <CardData key={stat.title} {...stat} />)
-      )}
+    <div className="dark:bg-background-dark dark:text-text-dark">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-6">
+        {loading ? (
+          <div className="col-span-full flex justify-center">
+            <Loading />
+          </div>
+        ) : (
+          stats.map((stat) => <CardData key={stat.title} {...stat} />)
+        )}
+      </div>
+      <DashboardCharts />
+      <DashboardCharts />
       <ToastContainer />
     </div>
   );
 };
 
 export default OverView;
+
+const DashboardCharts: React.FC = () => {
+  const [salesData] = useState({
+    options: {
+      chart: {
+        id: "sales-chart",
+        toolbar: { show: false },
+      },
+      xaxis: {
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      },
+      colors: ["#4f46e5"],
+      dataLabels: { enabled: false },
+      stroke: { curve: "smooth" as const },
+    },
+    series: [{ name: "Sales", data: [120, 180, 150, 210, 280, 320] }],
+  });
+
+  const [revenueData] = useState({
+    options: {
+      chart: {
+        id: "revenue-chart",
+        toolbar: { show: false },
+      },
+      xaxis: {
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      },
+      colors: ["#10b981"],
+      dataLabels: { enabled: false },
+    },
+    series: [{ name: "Revenue", data: [5000, 7000, 6000, 8000, 11000, 13000] }],
+  });
+
+  return (
+    <div className="grid md:grid-cols-2 gap-6 p-6">
+      {/* Sales Chart */}
+      <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md">
+        <h2 className="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-200">
+          Sales Overview
+        </h2>
+        <Chart
+          options={salesData.options}
+          series={salesData.series}
+          type="area"
+          height={300}
+        />
+      </div>
+
+      {/* Revenue Chart */}
+      <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md">
+        <h2 className="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-200">
+          Revenue Growth
+        </h2>
+        <Chart
+          options={revenueData.options}
+          series={revenueData.series}
+          type="bar"
+          height={300}
+        />
+      </div>
+    </div>
+  );
+};

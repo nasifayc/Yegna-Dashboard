@@ -4,6 +4,7 @@ import { logout } from "@/store/auth/authSlice";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { RiSearch2Line } from "react-icons/ri";
 import { BsMoonStars } from "react-icons/bs";
+import { FiSun } from "react-icons/fi";
 import { LuBellRing } from "react-icons/lu";
 import { useEffect, useState } from "react";
 
@@ -19,15 +20,21 @@ import { useAppSelector } from "@/store/store";
 import axios from "axios";
 import { notify } from "../Toast";
 
+import useDarkMode from "@/hooks/theme/UseTheme";
+
 const NavBar: React.FC = () => {
+  const { darkMode, toggleDarkMode } = useDarkMode();
+
   return (
-    <div className="bg-background-light text-background-dark fixed top-0 left-60 right-0 z-10 h-24 px-6 flex justify-between items-center">
-      <div className="">
+    <div className="bg-background- dark:bg-background-dark text-background-dark dark:text-background-light fixed top-0 left-60 right-0 z-10 h-24 px-6 flex justify-between items-center">
+      <div className="flex">
         <BiMenuAltLeft
-          className="text-gray-500 inline-block border-2 border-gray-300 rounded-lg mr-5"
+          className="text-gray-500 inline-block border-2 border-gray-300 rounded-lg mr-5 "
           size={32}
         />
-        <h1 className="text-xl font-semibold inline-block">DashBoared Light</h1>
+        <h1 className=" text-xl font-semibold inline-block">
+          DashBoared Light
+        </h1>
       </div>
       <div className="relative w-full max-w-xs">
         <RiSearch2Line
@@ -41,13 +48,17 @@ const NavBar: React.FC = () => {
       </div>
 
       <div className="flex items-center gap-8">
-        <div className=" p-1 border-2 border-gray-300 rounded-md">
-          <BsMoonStars size={20} />
+        <div className=" p-1 border-2 border-gray-300 rounded-md cursor-pointer">
+          {darkMode ? (
+            <FiSun size={20} onClick={toggleDarkMode} />
+          ) : (
+            <BsMoonStars size={20} onClick={toggleDarkMode} />
+          )}
         </div>
         <div className=" p-1 border-2 border-gray-300 rounded-md">
           <LuBellRing size={20} />
         </div>
-        {/* <UserProfileDropdown /> */}
+        <UserProfileDropdown />
       </div>
     </div>
   );
@@ -86,7 +97,7 @@ const UserProfileDropdown = () => {
           error = err.response?.data?.message;
           notify(error);
         }
-        console.error("Error getting product list", err);
+        console.error("Error getting admin", err);
       }
     };
     fetchData();
@@ -95,7 +106,7 @@ const UserProfileDropdown = () => {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 px-4 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition">
+        <button className="flex items-center gap-2 px-4 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition ">
           <img
             src={`${API_BASE_URL}/${admin?.profile_photo?.replace(/\\/g, "/")}`}
             alt="User"

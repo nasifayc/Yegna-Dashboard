@@ -94,7 +94,7 @@ const AllCategory: React.FC = () => {
 
   return (
     <div className="p-6">
-      <Card>
+      <Card className="dark:bg-background-dark dark:text-text-dark">
         <CardHeader>
           <CardTitle>Categories</CardTitle>
           <CardDescription>
