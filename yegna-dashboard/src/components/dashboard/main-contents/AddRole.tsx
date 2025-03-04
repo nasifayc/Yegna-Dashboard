@@ -15,6 +15,7 @@ import {
   CardContent,
   // CardDescription,
   // CardFooter,
+  CardTitle,
   CardHeader,
 } from "@/components/ui/card";
 
@@ -99,12 +100,18 @@ const CreateRole: React.FC = () => {
 
   return (
     <div className="p-6">
-      <Card className="dark:bg-background-dark dark:text-text-dark">
-        <CardHeader>Create Role</CardHeader>
+      <Card className="dark:bg-gray-800 dark:border-none transition dark:text-text-dark">
+        <CardHeader>
+          <CardTitle>Create Role</CardTitle>
+        </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-8 max-w-3xl mx-auto py-10"
+          >
             <div>
               <Label htmlFor="roleName">Role Name</Label>
+
               <Input
                 id="roleName"
                 type="text"
@@ -126,21 +133,25 @@ const CreateRole: React.FC = () => {
             </div>
 
             <div>
-              <Label>Permissions</Label>
+              <Label className="text-xl ">Permissions</Label>
               {loading ? (
                 <Loading />
               ) : (
-                <div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-4 mt-10">
                   {permissions.map((permission) => (
-                    <div key={permission._id}>
+                    <div
+                      key={permission._id}
+                      className="flex justify-start items-center space-x-3"
+                    >
                       <Checkbox
                         id={permission._id}
                         checked={selectedPermissions.includes(permission._id)}
                         onCheckedChange={() =>
                           handlePermissionChange(permission._id)
                         }
+                        className="border-gray-400"
                       />
-                      <Label htmlFor={permission._id}>
+                      <Label htmlFor={permission._id} className="font-normal ">
                         {permission.description}
                       </Label>
                     </div>
@@ -148,7 +159,11 @@ const CreateRole: React.FC = () => {
                 </div>
               )}
             </div>
-            <Button type="submit" disabled={loading}>
+            <Button
+              type="submit"
+              disabled={loading}
+              className="bg-primary-light text-white py-2 px-5 rounded"
+            >
               {loading ? <Loading /> : "Create Role"}
             </Button>
           </form>

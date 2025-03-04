@@ -4,11 +4,11 @@ import Sidebar from "./SideBar";
 
 const Dashboard: React.FC = () => {
   return (
-    <div className="flex h-screen dark:bg-background-dark">
+    <div className="flex h-screen dark:bg-background-dark bg-background-light">
       <Sidebar />
       <div className="flex-1 flex flex-col">
         <NavBar />
-        <div className="p-4 bg-gray-50  pl-60 py-24">
+        <div className="p-4 dark:bg-background-dark bg-background-light pl-60 py-24">
           <Outlet />
         </div>
       </div>

@@ -15,7 +15,7 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
+  // TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -67,15 +67,16 @@ const AllPermissions: React.FC = () => {
 
   return (
     <div className="p-6">
-      <Card className="dark:bg-background-dark dark:text-text-dark">
+      <Card className="dark:bg-gray-800 dark:border-none transition dark:text-text-dark">
         <CardHeader>
-          <CardTitle>Permissions</CardTitle>
-          <CardDescription>View permissions.</CardDescription>
+          <CardTitle>Permissions List</CardTitle>
+          <CardDescription className="text-gray-400 ">
+            Permission set distinict privilage for admins
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
-            <TableCaption>A list of Permissions</TableCaption>
-            <TableHeader>
+            <TableHeader className="bg-gray-200 dark:bg-gray-500  text-background-dark">
               <TableRow>
                 <TableHead>ID</TableHead>
                 <TableHead>Model</TableHead>
@@ -92,7 +93,14 @@ const AllPermissions: React.FC = () => {
                 </TableRow>
               ) : (
                 paginatedPermissions.map((permission, index) => (
-                  <TableRow key={permission._id}>
+                  <TableRow
+                    key={permission._id}
+                    className={
+                      index % 2 !== 0
+                        ? "bg-gray-200  dark:bg-gray-500 transition text-background-dark"
+                        : ""
+                    }
+                  >
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{permission.model}</TableCell>
 
@@ -126,6 +134,7 @@ const AllPermissions: React.FC = () => {
               <select
                 value={entriesPerPage}
                 onChange={(e) => setEntriesPerPage(Number(e.target.value))}
+                className="bg-gray-200 dark:bg-gray-500 transition text-background-dark p-1 mx-2 rounded-md"
               >
                 <option value={10}>10</option>
                 <option value={20}>20</option>
@@ -135,19 +144,21 @@ const AllPermissions: React.FC = () => {
               </select>
               <span>entries</span>
             </div>
-            <div>
+            <div className="pt-10">
               <Button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage(currentPage - 1)}
+                className="bg-gray-500"
               >
                 Prev
               </Button>
-              <span>
+              <span className="mx-3">
                 Page {currentPage} of {totalPages}
               </span>
               <Button
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage(currentPage + 1)}
+                className="bg-gray-500"
               >
                 Next
               </Button>

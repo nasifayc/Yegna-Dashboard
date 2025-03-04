@@ -142,7 +142,7 @@ const AddProduct: React.FC = () => {
 
   return (
     <div className="p-6">
-      <Card className="dark:bg-background-dark dark:text-text-dark">
+      <Card className="dark:bg-gray-800 dark:border-none transition dark:text-text-dark">
         <CardHeader>
           <CardTitle>Create Product</CardTitle>
           {/* <CardDescription>product form </CardDescription> */}
@@ -256,14 +256,18 @@ const AddProduct: React.FC = () => {
                           <SelectValue placeholder="-- Select Category --" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="bg-background-light">
+                      <SelectContent className="bg-background-light dark:bg-gray-800  dark:text-background-light">
                         {categories.length == 0 ? (
                           <p className="text-gray-500 p-2">
                             No categories available
                           </p>
                         ) : (
                           categories.map((category) => (
-                            <SelectItem key={category._id} value={category._id}>
+                            <SelectItem
+                              key={category._id}
+                              value={category._id}
+                              className="hover:bg-gray-100 dark:hover:bg-gray-400 transition cursor-pointer rounded-md  "
+                            >
                               {category.name}
                             </SelectItem>
                           ))
@@ -467,11 +471,21 @@ const AddProduct: React.FC = () => {
                   </FormItem>
                 )}
               />
-              <div>
-                <Button type="button" onClick={() => form.reset()}>
+              <div className="flex justify-start space-x-4">
+                <Button
+                  type="button"
+                  onClick={() => form.reset()}
+                  className="bg-red-400"
+                >
                   Clear
                 </Button>
-                {saving ? <Loading /> : <Button type="submit">Submit</Button>}
+                {saving ? (
+                  <Loading />
+                ) : (
+                  <Button type="submit" className="bg-primary-light">
+                    Submit
+                  </Button>
+                )}
               </div>
             </form>
           </Form>

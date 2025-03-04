@@ -15,7 +15,7 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
+  // TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -64,15 +64,17 @@ const AllUsers: React.FC = () => {
 
   return (
     <div className="p-6">
-      <Card className="dark:bg-background-dark dark:text-text-dark">
+      <Card className="dark:bg-gray-800 dark:border-none transition dark:text-text-dark">
         <CardHeader>
           <CardTitle>Users</CardTitle>
-          <CardDescription>View app users.</CardDescription>
+          <CardDescription className="text-gray-400 ">
+            App Users
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
-            <TableCaption>A list app users</TableCaption>
-            <TableHeader>
+            {/* <TableCaption>A list app users</TableCaption> */}
+            <TableHeader className="bg-gray-200 dark:bg-gray-500  text-background-dark">
               <TableRow>
                 <TableHead>ID</TableHead>
                 <TableHead>Username</TableHead>
@@ -87,7 +89,14 @@ const AllUsers: React.FC = () => {
                 </TableRow>
               ) : (
                 paginatedUsers.map((user, index) => (
-                  <TableRow key={user._id}>
+                  <TableRow
+                    key={user._id}
+                    className={
+                      index % 2 !== 0
+                        ? "bg-gray-200  dark:bg-gray-500 transition text-background-dark"
+                        : ""
+                    }
+                  >
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{user.username}</TableCell>
                     <TableCell>{user.email}</TableCell>
@@ -112,6 +121,7 @@ const AllUsers: React.FC = () => {
               <select
                 value={entriesPerPage}
                 onChange={(e) => setEntriesPerPage(Number(e.target.value))}
+                className="bg-gray-200 dark:bg-gray-500 transition text-background-dark p-1 mx-2 rounded-md"
               >
                 <option value={10}>10</option>
                 <option value={20}>20</option>
@@ -121,19 +131,21 @@ const AllUsers: React.FC = () => {
               </select>
               <span>entries</span>
             </div>
-            <div>
+            <div className="pt-10">
               <Button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage(currentPage - 1)}
+                className="bg-gray-500"
               >
                 Prev
               </Button>
-              <span>
+              <span className="mx-3">
                 Page {currentPage} of {totalPages}
               </span>
               <Button
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage(currentPage + 1)}
+                className="bg-gray-500"
               >
                 Next
               </Button>

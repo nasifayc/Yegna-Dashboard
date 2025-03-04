@@ -24,7 +24,7 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
+  // TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -96,17 +96,16 @@ const AllRoles: React.FC = () => {
   );
   return (
     <div className="p-6">
-      <Card className="dark:bg-background-dark dark:text-text-dark">
+      <Card className="dark:bg-gray-800 dark:border-none transition dark:text-text-dark">
         <CardHeader>
-          <CardTitle>All Roles</CardTitle>
-          <CardDescription>
-            View, edit, and delete Role in the system.
+          <CardTitle>Roles List</CardTitle>
+          <CardDescription className="text-gray-400 ">
+            Manage authorized access
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
-            <TableCaption>A list of Role</TableCaption>
-            <TableHeader>
+            <TableHeader className="bg-gray-200 dark:bg-gray-500  text-background-dark">
               <TableRow>
                 <TableHead>ID</TableHead>
                 <TableHead>Role Name</TableHead>
@@ -125,7 +124,14 @@ const AllRoles: React.FC = () => {
                 </TableRow>
               ) : (
                 paginatedVendors.map((role, index) => (
-                  <TableRow key={role._id}>
+                  <TableRow
+                    key={role._id}
+                    className={
+                      index % 2 !== 0
+                        ? "bg-gray-200  dark:bg-gray-500 transition text-background-dark"
+                        : ""
+                    }
+                  >
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{role.role_name}</TableCell>
                     <TableCell>{role.description}</TableCell>
@@ -139,10 +145,15 @@ const AllRoles: React.FC = () => {
                     </TableCell>
                     <TableCell>
                       <DropdownMenu>
-                        <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuLabel>Edit</DropdownMenuLabel>
-                          <DropdownMenuSeparator />
+                        <DropdownMenuTrigger className="bg-red-500 px-3 py-2 rounded-md text-white">
+                          Actions
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="bg-background-light dark:bg-background-dark text-background-dark dark:text-background-light">
+                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                          <DropdownMenuSeparator className="bg-gray-200 mx-1" />
+                          <DropdownMenuItem className=" hover:bg-gray-100 rounded-md cursor-pointer transition dark:hover:text-background-dark ">
+                            Edit
+                          </DropdownMenuItem>
                           <DropdownMenuItem
                             onClick={() => {
                               if (
@@ -153,6 +164,7 @@ const AllRoles: React.FC = () => {
                                 deleteRole(role._id);
                               }
                             }}
+                            className=" hover:bg-gray-100 rounded-md cursor-pointer transition dark:hover:text-background-dark "
                           >
                             Delete
                           </DropdownMenuItem>
@@ -172,6 +184,7 @@ const AllRoles: React.FC = () => {
               <select
                 value={entriesPerPage}
                 onChange={(e) => setEntriesPerPage(Number(e.target.value))}
+                className="bg-gray-200 dark:bg-gray-500 transition text-background-dark p-1 mx-2 rounded-md"
               >
                 <option value={10}>10</option>
                 <option value={20}>20</option>
@@ -181,19 +194,21 @@ const AllRoles: React.FC = () => {
               </select>
               <span>entries</span>
             </div>
-            <div>
+            <div className="pt-10">
               <Button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage(currentPage - 1)}
+                className="bg-gray-500"
               >
                 Prev
               </Button>
-              <span>
+              <span className="mx-3">
                 Page {currentPage} of {totalPages}
               </span>
               <Button
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage(currentPage + 1)}
+                className="bg-gray-500"
               >
                 Next
               </Button>

@@ -27,7 +27,7 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
+  // TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -94,17 +94,16 @@ const AllCategory: React.FC = () => {
 
   return (
     <div className="p-6">
-      <Card className="dark:bg-background-dark dark:text-text-dark">
+      <Card className="dark:bg-gray-800 dark:border-none transition dark:text-text-dark">
         <CardHeader>
           <CardTitle>Categories</CardTitle>
-          <CardDescription>
-            View, edit, and delete product categories.
+          <CardDescription className="text-gray-400 ">
+            Track and Manage Product Categories
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
-            <TableCaption>A list of Categories</TableCaption>
-            <TableHeader>
+            <TableHeader className="bg-gray-200 dark:bg-gray-500  text-background-dark">
               <TableRow>
                 <TableHead>ID</TableHead>
                 <TableHead>Name</TableHead>
@@ -117,10 +116,19 @@ const AllCategory: React.FC = () => {
             </TableHeader>
             <TableBody>
               {categories.length === 0 ? (
-                <p>Empty List</p>
+                <TableRow>
+                  <TableCell>Empty List</TableCell>
+                </TableRow>
               ) : (
                 paginatedCategories.map((category, index) => (
-                  <TableRow key={category._id}>
+                  <TableRow
+                    key={category._id}
+                    className={
+                      index % 2 !== 0
+                        ? "bg-gray-200  dark:bg-gray-500 transition text-background-dark"
+                        : ""
+                    }
+                  >
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{category.name}</TableCell>
                     <TableCell>
@@ -138,14 +146,26 @@ const AllCategory: React.FC = () => {
                       {category.isActive ? "Active" : "In Active"}
                     </TableCell>
                     <TableCell>
-                      {new Date(category.createdAt).toISOString()}
+                      {new Date(category.createdAt).toLocaleDateString(
+                        "en-US",
+                        {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        }
+                      )}
                     </TableCell>
                     <TableCell>
                       <DropdownMenu>
-                        <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuLabel>Edit</DropdownMenuLabel>
-                          <DropdownMenuSeparator />
+                        <DropdownMenuTrigger className="bg-red-500 px-3 py-2 rounded-md text-white">
+                          Actions
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="bg-background-light dark:bg-background-dark text-background-dark dark:text-background-light">
+                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                          <DropdownMenuSeparator className="bg-gray-200 mx-1" />
+                          <DropdownMenuItem className=" hover:bg-gray-100 rounded-md cursor-pointer transition dark:hover:text-background-dark ">
+                            Edit
+                          </DropdownMenuItem>
                           <DropdownMenuItem
                             onClick={() => {
                               if (
@@ -156,6 +176,7 @@ const AllCategory: React.FC = () => {
                                 deleteCategory(category._id);
                               }
                             }}
+                            className=" hover:bg-gray-100 rounded-md cursor-pointer transition dark:hover:text-background-dark "
                           >
                             Delete
                           </DropdownMenuItem>
@@ -175,6 +196,7 @@ const AllCategory: React.FC = () => {
               <select
                 value={entriesPerPage}
                 onChange={(e) => setEntriesPerPage(Number(e.target.value))}
+                className="bg-gray-200 dark:bg-gray-500 transition text-background-dark p-1 mx-2 rounded-md"
               >
                 <option value={10}>10</option>
                 <option value={20}>20</option>
@@ -184,19 +206,21 @@ const AllCategory: React.FC = () => {
               </select>
               <span>entries</span>
             </div>
-            <div>
+            <div className="pt-10">
               <Button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage(currentPage - 1)}
+                className="bg-gray-500"
               >
                 Prev
               </Button>
-              <span>
+              <span className="mx-3">
                 Page {currentPage} of {totalPages}
               </span>
               <Button
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage(currentPage + 1)}
+                className="bg-gray-500"
               >
                 Next
               </Button>

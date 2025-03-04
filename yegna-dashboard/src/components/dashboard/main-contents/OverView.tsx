@@ -38,7 +38,7 @@ const CardData: React.FC<CardProps> = ({
   Image,
 }) => {
   return (
-    <Card className="flex max-w-72 min-w-28 items-center justify-between p-4 shadow-md bg-background-light">
+    <Card className="flex max-w-72 min-w-28 items-center justify-between p-4 shadow-md bg-background-light dark:bg-gray-800 dark:border-none transition">
       <div>
         <CardHeader className="p-0">
           <CardTitle className="text-lg">{title}</CardTitle>

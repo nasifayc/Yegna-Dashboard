@@ -4,12 +4,13 @@ import { sidebarItems } from "./sidebarElements";
 import { useAppSelector } from "@/store/store";
 import logoDark from "../../assets/logo-dark.png";
 import axios from "axios";
-// import logoLight from "../../assets/logo-light.png";
+import logoLight from "../../assets/logo-light.png";
 import {
   MdOutlineKeyboardArrowRight,
   MdOutlineKeyboardArrowDown,
 } from "react-icons/md";
 import { GET_PERMISSIONS_URL } from "@/utils/api/ApiRoutes";
+import useDarkMode from "@/hooks/theme/UseTheme";
 
 const Sidebar: React.FC = () => {
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -17,6 +18,7 @@ const Sidebar: React.FC = () => {
   const [permissions, setPermissions] = useState<string[]>([]);
   // const isSuperAdmin = useAppSelector((state) => state.auth.isSuperAdmin);
   const token = useAppSelector((state) => state.auth.accessToken);
+  const { darkMode } = useDarkMode();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,8 +56,12 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="fixed w-60 top-0 bottom-0 bg-background-light dark:bg-background-dark">
-      <img src={logoDark} alt="logo" className="h-12 pl-6 my-6" />
+    <div className="fixed w-60 top-0 bottom-0 bg-background-light dark:bg-gray-800 transition  z-20">
+      <img
+        src={darkMode ? logoLight : logoDark}
+        alt="logo"
+        className="h-12 pl-6 my-6"
+      />
       <ul>
         {sidebarItems.map((item, index) => {
           if (!permissions.includes(item.code_name)) {
@@ -68,13 +74,13 @@ const Sidebar: React.FC = () => {
           return (
             <li
               key={item.title}
-              className="w-full cursor-pointer text-gray-600"
+              className="w-full cursor-pointer text-gray-600 dark:text-white"
             >
               <div
-                className={`flex justify-between items-center py-3 hover:bg-gradient-to-l from-primary-light  px-6 ${
+                className={`flex justify-between items-center py-3 hover:bg-gradient-to-l   px-6 ${
                   index === current
                     ? "bg-gradient-to-l from-primary-light to-transparent"
-                    : ""
+                    : "hover:from-gray-200 dark:hover:from-gray-700"
                 } transition-all`}
                 onClick={() => toggleExpanded(item.title, index)}
               >

@@ -122,12 +122,12 @@ const AddCategory: React.FC = () => {
   };
 
   const handleFileChange = (files: File[] | null) => {
-    setFile(files && files.length > 0 ? files[0] : null); // Handle both File[] and null cases
+    setFile(files && files.length > 0 ? files[0] : null);
   };
 
   return (
     <div className="p-6">
-      <Card className="dark:bg-background-dark dark:text-text-dark">
+      <Card className="dark:bg-gray-800 dark:border-none transition dark:text-text-dark">
         <CardHeader>
           <CardTitle>Create Category</CardTitle>
         </CardHeader>
@@ -187,17 +187,21 @@ const AddCategory: React.FC = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="-- Select Parent Category --" />
+                          <SelectValue placeholder="-- Select --" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="bg-background-light">
+                      <SelectContent className="bg-background-light dark:bg-gray-800  dark:text-background-light">
                         {categories.length === 0 ? (
                           <p className="text-gray-500 p-2">
                             No categories available
                           </p>
                         ) : (
                           categories.map((category) => (
-                            <SelectItem key={category._id} value={category._id}>
+                            <SelectItem
+                              key={category._id}
+                              value={category._id}
+                              className="hover:bg-gray-100 dark:hover:bg-gray-400 transition cursor-pointer rounded-md "
+                            >
                               {category.name}
                             </SelectItem>
                           ))
@@ -255,11 +259,21 @@ const AddCategory: React.FC = () => {
                 )}
               />
 
-              <div>
-                <Button type="button" onClick={() => form.reset()}>
+              <div className="flex justify-start space-x-4">
+                <Button
+                  type="button"
+                  onClick={() => form.reset()}
+                  className="bg-red-400"
+                >
                   Clear
                 </Button>
-                {saving ? <Loading /> : <Button type="submit">Submit</Button>}
+                {saving ? (
+                  <Loading />
+                ) : (
+                  <Button type="submit" className="bg-primary-light">
+                    Submit
+                  </Button>
+                )}
               </div>
             </form>
           </Form>
