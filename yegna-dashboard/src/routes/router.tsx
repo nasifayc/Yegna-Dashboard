@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import React from "react";
 import ProtectedRoute from "./ProtectedRoute";
+import Loading from "@/components/Loading";
 
 const LazyOverView = React.lazy(
   () => import("../components/dashboard/main-contents/OverView")
@@ -39,6 +40,10 @@ const LazyAddVendor = React.lazy(
   () => import("../components/dashboard/main-contents/AddVendor")
 );
 
+const LazyTransaction = React.lazy(
+  () => import("../components/dashboard/main-contents/Transaction")
+);
+
 const LazyAllRoles = React.lazy(
   () => import("../components/dashboard/main-contents/AllRoles")
 );
@@ -55,12 +60,12 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <React.Suspense fallback="Loading...">
+      <React.Suspense fallback={<Loading />}>
         <LazyLanding />
       </React.Suspense>
     ),
     errorElement: (
-      <React.Suspense fallback="Loading...">
+      <React.Suspense fallback={<Loading />}>
         <LazyPageNotFound />
       </React.Suspense>
     ),
@@ -78,7 +83,7 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: (
-          <React.Suspense fallback="Loading...">
+          <React.Suspense fallback={<Loading />}>
             <LazyOverView />
           </React.Suspense>
         ),
@@ -86,7 +91,7 @@ export const router = createBrowserRouter([
       {
         path: "overview",
         element: (
-          <React.Suspense fallback="Loading...">
+          <React.Suspense fallback={<Loading />}>
             <LazyOverView />
           </React.Suspense>
         ),
@@ -95,7 +100,7 @@ export const router = createBrowserRouter([
       {
         path: "product/all",
         element: (
-          <React.Suspense fallback="Loading...">
+          <React.Suspense fallback={<Loading />}>
             <LazyAllProducts />
           </React.Suspense>
         ),
@@ -103,7 +108,7 @@ export const router = createBrowserRouter([
       {
         path: "product/add",
         element: (
-          <React.Suspense fallback="Loading...">
+          <React.Suspense fallback={<Loading />}>
             <LazyAddProduct />
           </React.Suspense>
         ),
@@ -111,7 +116,7 @@ export const router = createBrowserRouter([
       {
         path: "category/all",
         element: (
-          <React.Suspense fallback="Loading...">
+          <React.Suspense fallback={<Loading />}>
             <LazyAllCategories />
           </React.Suspense>
         ),
@@ -119,7 +124,7 @@ export const router = createBrowserRouter([
       {
         path: "category/add",
         element: (
-          <React.Suspense fallback="Loading...">
+          <React.Suspense fallback={<Loading />}>
             <LazyAddCategory />
           </React.Suspense>
         ),
@@ -128,7 +133,7 @@ export const router = createBrowserRouter([
       {
         path: "user/all",
         element: (
-          <React.Suspense fallback="Loading...">
+          <React.Suspense fallback={<Loading />}>
             <LazyAllUsers />
           </React.Suspense>
         ),
@@ -136,7 +141,7 @@ export const router = createBrowserRouter([
       {
         path: "vendor/all",
         element: (
-          <React.Suspense fallback="Loading...">
+          <React.Suspense fallback={<Loading />}>
             <LazyAllVendors />
           </React.Suspense>
         ),
@@ -144,15 +149,25 @@ export const router = createBrowserRouter([
       {
         path: "vendor/add",
         element: (
-          <React.Suspense fallback="Loading...">
+          <React.Suspense fallback={<Loading />}>
             <LazyAddVendor />
           </React.Suspense>
         ),
       },
+
+      {
+        path: "transaction/all",
+        element: (
+          <React.Suspense fallback={<Loading />}>
+            <LazyTransaction />
+          </React.Suspense>
+        ),
+      },
+
       {
         path: "role/all",
         element: (
-          <React.Suspense fallback="Loading...">
+          <React.Suspense fallback={<Loading />}>
             <LazyAllRoles />
           </React.Suspense>
         ),
@@ -161,7 +176,7 @@ export const router = createBrowserRouter([
       {
         path: "role/add",
         element: (
-          <React.Suspense fallback="Loading...">
+          <React.Suspense fallback={<Loading />}>
             <LazyCreateRole />
           </React.Suspense>
         ),
@@ -170,7 +185,7 @@ export const router = createBrowserRouter([
       {
         path: "permission/all",
         element: (
-          <React.Suspense fallback="Loading...">
+          <React.Suspense fallback={<Loading />}>
             <LazyAllPermissions />
           </React.Suspense>
         ),

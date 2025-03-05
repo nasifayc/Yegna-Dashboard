@@ -3,8 +3,8 @@ import { logout } from "@/store/auth/authSlice";
 
 import { BiMenuAltLeft } from "react-icons/bi";
 import { RiSearch2Line } from "react-icons/ri";
-import { BsMoonStars } from "react-icons/bs";
-import { FiSun } from "react-icons/fi";
+
+import { FiSun, FiMoon } from "react-icons/fi";
 import { LuBellRing } from "react-icons/lu";
 import { useEffect, useState } from "react";
 
@@ -53,7 +53,7 @@ const NavBar: React.FC = () => {
           {darkMode ? (
             <FiSun size={20} onClick={toggleDarkMode} />
           ) : (
-            <BsMoonStars size={20} onClick={toggleDarkMode} />
+            <FiMoon size={20} onClick={toggleDarkMode} />
           )}
         </div>
         <div className=" p-1 border-2 border-gray-300 rounded-md">

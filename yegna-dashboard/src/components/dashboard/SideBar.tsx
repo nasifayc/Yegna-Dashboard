@@ -2,15 +2,17 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { sidebarItems } from "./sidebarElements";
 import { useAppSelector } from "@/store/store";
-import logoDark from "../../assets/logo-dark.png";
+
 import axios from "axios";
-import logoLight from "../../assets/logo-light.png";
+
 import {
   MdOutlineKeyboardArrowRight,
   MdOutlineKeyboardArrowDown,
 } from "react-icons/md";
 import { GET_PERMISSIONS_URL } from "@/utils/api/ApiRoutes";
 import useDarkMode from "@/hooks/theme/UseTheme";
+import logoLight from "../../assets/logo-light.png";
+import logoDark from "../../assets/logo-dark.png";
 
 const Sidebar: React.FC = () => {
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -18,8 +20,9 @@ const Sidebar: React.FC = () => {
   const [permissions, setPermissions] = useState<string[]>([]);
   // const isSuperAdmin = useAppSelector((state) => state.auth.isSuperAdmin);
   const token = useAppSelector((state) => state.auth.accessToken);
-  const { darkMode } = useDarkMode();
 
+  const { darkMode } = useDarkMode();
+  console.log("Dark Mode", darkMode);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -57,11 +60,12 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className="fixed w-60 top-0 bottom-0 bg-background-light dark:bg-gray-800 transition  z-20">
-      <img
-        src={darkMode ? logoLight : logoDark}
-        alt="logo"
-        className="h-12 pl-6 my-6"
-      />
+      {darkMode ? (
+        <img src={logoLight} alt="logo" className="h-12 pl-6 my-6" />
+      ) : (
+        <img src={logoDark} alt="logo" className="h-12 pl-6 my-6" />
+      )}
+
       <ul>
         {sidebarItems.map((item, index) => {
           if (!permissions.includes(item.code_name)) {

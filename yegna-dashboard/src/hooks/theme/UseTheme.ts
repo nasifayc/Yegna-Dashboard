@@ -16,6 +16,7 @@ const useDarkMode = () => {
       const newMode = !prev;
       document.documentElement.classList.toggle("dark", newMode);
       localStorage.setItem("theme", newMode ? "dark" : "light");
+
       return newMode;
     });
   };

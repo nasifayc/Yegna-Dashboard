@@ -24,47 +24,35 @@ const SignInPage: React.FC = () => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-20">
-      <div className="bg-background-light dark:bg-background-dark p-6 rounded shadow max-w-md w-full relative">
+      <div className="text-text-light  bg-gray-100  p-6 rounded shadow max-w-md w-full relative">
         <button
           onClick={handleCloseModal}
-          className="absolute top-4 right-4 text-xl text-text-light dark:text-text-dark"
+          className="absolute top-4 right-4 text-xl "
         >
           <FaTimes />
         </button>
 
-        <h2 className="text-2xl text-text-light dark:text-text-dark text-center">
-          Sign In
-        </h2>
+        <h2 className="text-2xl  text-center">Sign In</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col space-y-4 mt-4">
-            <label
-              htmlFor="email"
-              className="text-text-light dark:text-text-dark"
-            >
-              Email
-            </label>
+            <label htmlFor="email">Email</label>
             <input
               type="text"
               {...register("email")}
               placeholder="example@gmail.com"
-              className="p-2 rounded shadow bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark"
+              className="p-2 rounded shadow "
             />
             {errors.email && (
               <p className="text-sm text-red-600">{errors.email.message}</p>
             )}
           </div>
           <div className="flex flex-col space-y-4 mt-4">
-            <label
-              htmlFor="password"
-              className="text-text-light dark:text-text-dark"
-            >
-              Password
-            </label>
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               {...register("password")}
               placeholder="Your password"
-              className="p-2 rounded shadow bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark"
+              className="p-2 rounded shadow bg-background-light  text-text-light "
             />
             {errors.password && (
               <p className="text-sm text-red-600">{errors.password.message}</p>

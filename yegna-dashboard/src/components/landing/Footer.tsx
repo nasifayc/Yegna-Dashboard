@@ -1,5 +1,4 @@
 import {
-  FaFacebookF,
   FaTwitter,
   FaLinkedinIn,
   FaInstagram,
@@ -7,6 +6,7 @@ import {
 } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import logo from "../../assets/logo.png";
+import { FaGithub, FaTelegram } from "react-icons/fa6";
 
 const Footer: React.FC = () => {
   const [showScrollButton, setShowScrollButton] = useState<boolean>(false);
@@ -112,25 +112,29 @@ const Footer: React.FC = () => {
       {/* Footer Bottom */}
       <div className="mt-12 border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
         <p className="text-sm">
-          © {new Date().getFullYear()} Our Company. All rights reserved.
+          © {new Date().getFullYear()} Developed By Nasifay. All rights
+          reserved.
         </p>
         <div className="flex space-x-4 mt-4 md:mt-0">
           <a
-            href="#"
+            href="https://t.me/Nasi_c "
+            target="blank"
             className="text-gray-400 hover:text-primary-light transition"
-            aria-label="Facebook"
+            aria-label="Telegram"
           >
-            <FaFacebookF />
+            <FaTelegram />
           </a>
           <a
-            href="#"
+            href="https://github.com/nasifayc "
+            target="blank"
             className="text-gray-400 hover:text-primary-light transition"
-            aria-label="Twitter"
+            aria-label="Github"
           >
-            <FaTwitter />
+            <FaGithub />
           </a>
           <a
-            href="#"
+            href="https://linkedin.com/in/nasifay-chala-810844282/?lipi=urn%3ali%3apage%3ad_flagship3_profile_view_base_contact_details%3b7bvdsgy0syo4duj4bgen8g%3d%3d"
+            target="blank"
             className="text-gray-400 hover:text-primary-light transition"
             aria-label="LinkedIn"
           >
