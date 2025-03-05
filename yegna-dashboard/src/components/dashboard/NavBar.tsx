@@ -34,7 +34,7 @@ const NavBar: React.FC = () => {
           size={32}
         />
         <h1 className=" text-xl font-semibold inline-block">
-          DashBoared Light
+          {darkMode ? "DashBoared Dark" : "DashBoared Light"}
         </h1>
       </div>
       <div className="relative w-full max-w-xs">

@@ -1,4 +1,4 @@
-export const API_BASE_URL = "http://localhost:3000";
+export const API_BASE_URL = "https://yegna-app.onrender.com";
 export const LOGIN_URL = `${API_BASE_URL}/api/admin/auth/sign-in`;
 export const GET_PERMISSIONS_URL = `${API_BASE_URL}/api/admin/adminPermissions`;
 

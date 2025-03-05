@@ -80,7 +80,7 @@ const AllRoles: React.FC = () => {
       setRoles((prevRoles) => prevRoles.filter((role) => role._id !== id));
       notify("Role deleted successfully");
     } catch (err) {
-      console.error("Error deleting admin", err);
+      console.error("Error deleting role", err);
       let error = "Server Error";
       if (axios.isAxiosError(err)) {
         error = err.response?.data?.message;
