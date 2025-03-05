@@ -1,9 +1,4 @@
-import {
-  FaTwitter,
-  FaLinkedinIn,
-  FaInstagram,
-  FaArrowUp,
-} from "react-icons/fa";
+import { FaLinkedinIn, FaInstagram, FaArrowUp } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import logo from "../../assets/logo.png";
 import { FaGithub, FaTelegram } from "react-icons/fa6";
