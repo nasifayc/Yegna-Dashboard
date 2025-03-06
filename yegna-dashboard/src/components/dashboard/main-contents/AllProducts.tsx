@@ -1,10 +1,6 @@
 import { notify } from "@/components/Toast";
 import { useAppSelector } from "@/store/store";
-import {
-  API_BASE_URL,
-  PRODUCT_DELETE_URL,
-  PRODUCT_LIST_URL,
-} from "@/utils/api/ApiRoutes";
+import { PRODUCT_DELETE_URL, PRODUCT_LIST_URL } from "@/utils/api/ApiRoutes";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
@@ -135,10 +131,7 @@ const AllProducts: React.FC = () => {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>
                       <img
-                        src={`${API_BASE_URL}/${product.images[0].replace(
-                          /\\/g,
-                          "/"
-                        )}`}
+                        src={product.images[0]}
                         alt="Product Image"
                         className="w-10 h-10 rounded-full"
                       />

@@ -1,10 +1,6 @@
 import { notify } from "@/components/Toast";
 import { useAppSelector } from "@/store/store";
-import {
-  API_BASE_URL,
-  CATEGORY_DELETE_URL,
-  CATEGORY_LIST_URL,
-} from "@/utils/api/ApiRoutes";
+import { CATEGORY_DELETE_URL, CATEGORY_LIST_URL } from "@/utils/api/ApiRoutes";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
@@ -133,10 +129,7 @@ const AllCategory: React.FC = () => {
                     <TableCell>{category.name}</TableCell>
                     <TableCell>
                       <img
-                        src={`${API_BASE_URL}/${category.image?.replace(
-                          /\\/g,
-                          "/"
-                        )}`}
+                        src={category.image || ""}
                         alt="Category Image"
                         className="w-10 h-10 rounded-full"
                       />

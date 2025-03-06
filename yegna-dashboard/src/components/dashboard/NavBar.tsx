@@ -15,7 +15,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { ADMIN_CURRENT_URL, API_BASE_URL } from "@/utils/api/ApiRoutes";
+import { ADMIN_CURRENT_URL } from "@/utils/api/ApiRoutes";
 import { useAppSelector } from "@/store/store";
 import axios from "axios";
 import { notify } from "../Toast";
@@ -112,11 +112,7 @@ const UserProfileDropdown = () => {
       >
         <button className="flex items-center gap-2 px-4 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition ">
           <img
-            src={
-              admin?.profile_photo
-                ? `${API_BASE_URL}/${admin.profile_photo.replace(/\\/g, "/")}`
-                : profile
-            }
+            src={admin?.profile_photo ? admin.profile_photo : profile}
             alt={"Profile"}
             className="w-10 h-10 rounded-full object-cover"
           />

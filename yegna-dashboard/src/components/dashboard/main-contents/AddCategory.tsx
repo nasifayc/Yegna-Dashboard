@@ -111,7 +111,7 @@ const AddCategory: React.FC = () => {
         },
       });
 
-      notify("Product created successfully");
+      notify("Category created successfully");
       form.reset();
     } catch (err) {
       console.log("Failed to save", err);
